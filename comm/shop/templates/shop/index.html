@@ -1,0 +1,95 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <form method="GET" class="card card-sm">
+        <div class="card-body row no-gutters justify-content-center">
+          <div class="col">
+            <input type="search" name="item_name" placeholder="Search for products" class="form-control form-control-borderless" >
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-outline-success" name="button">Search!</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+{% if searched %}
+<div class="row">
+  {% for product in searched %}
+  <div class="col-md-3 col-sm-12">
+    <div class="card">
+      <img src="{{product.image}}" class="card-img-top">
+      <div class="card-body">
+        <div class="card-title">
+          <h3 id="abk{{product.id}}">{{product.title}}</h3>
+        </div>
+        <div class="card-text">
+          <i>${{product.price}}</i>
+          <h6>${{product.discount_price}}</h6>
+        </div>
+        <a class="btn btn-outline-success" href="{% url 'detail' product.id %}">View</a>
+        <button class="btn btn-outline-success atc" id="{{product.id}}" >Add to Cart</button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="row justify-content-center mt-3 mb-3">
+  <div class="col-md-6 col-sm-12">
+    <h5>Other Products</h5>
+    <p>check some other productsby us!!</p>
+  </div>
+</div> -->
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-3 col-sm-12">
+      <div class="card">
+        <img src="{{product.image}}" class="card-img-top">
+        <div class="card-body">
+          <div class="card-title">
+            <h3>{{product.title}}</h3>
+          </div>
+          <div class="card-text">
+            <p>{{product.description}}</p>
+            <i>${{product.price}}</i>
+            <h6>${{product.discount_price}}</h6>
+          </div>
+          <a class="btn btn-outline-success" href="{% url 'detail' product.id %}">View</a>
+          <button class="btn btn-outline-success atc" id="{{product.id}}">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+<div class="row">
+  <div class="col-md-3 col-sm-6 offset-md-4">
+    <ul class="pagination">
+      {% if page.has_previous %}
+        <li class="page-item">
+          <a class="btn btn-outline-success m-3" href="?page={{ page.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+
+        <li class="page-item">
+          <a class="btn btn-outline-success m-3" href="?page={{ page.number }}">...</a>
+        </li>
+
+      {% if page.has_next %}
+      <li class="page-item">
+        <a class="btn btn-outline-success m-3" href="?page={{ page.next_page_number }}">Next</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+</div>
+{% endblock content %}
